@@ -1,0 +1,70 @@
+public class InToPost {
+    static char[] stack = new char[100];
+    static int top = -1;
+    
+    static void push(char C){
+        stack[++top]=C;
+    }
+    
+    static char pop(){
+        if(top==-1)
+        return '\0';
+        else
+        return stack[top--];
+    }
+    
+    static char peek(){
+        if(top==-1)
+        return '\0';
+        return stack[top];
+    }
+    
+    static boolean isOperand(char C){
+        return Character.isLetterOrDigit(C);
+    }
+    
+    static int precedence(char op){
+        switch(op){
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            case '^':
+                return 3;
+        }
+        return -1;
+    }
+    
+    static String toPostfix(String infix){
+        String postfix=" ";
+        for(int i=0; i<infix.length(); i++){
+            char C= infix.charAt(i);
+            if(isOperand(C)){
+                postfix += C;
+            } else if(C=='('){
+                push(C);
+            } else if(C==')'){
+                while (top!=-1 && peek()!='('){
+                    postfix += pop();
+                }
+                pop();
+            } else{
+                while (top!=-1 && precedence (C) <= precedence(peek())){
+                    postfix += pop();
+                }
+                push(C);
+            }
+        }
+        while(top!=-1){
+            postfix += pop();
+        }
+        return postfix;
+    }
+    
+    public static void main (String[] args){
+        String infix = "a+b*(c^d-e)^(f+g*h)-i";
+        System.out.println("Postfix:" + toPostfix(infix));
+    }
+}
