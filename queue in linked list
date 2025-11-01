@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Node{
+    int data;
+    Node next;
+    
+    Node(int value){
+        data=value;
+        next=null;
+    }
+}
+
+class QLL{
+    Node front,rear;
+    QLL() {
+        front=rear=null;
+    }
+
+void enqueue(int value){
+    Node n = new Node(value);
+    if(rear==null){
+        front=rear=n;
+    } else{
+        rear.next=n;
+        rear=n;
+    }
+}
+
+void dequeue(){
+    if(front==null){
+        System.out.println("underflow");
+    } else{
+        System.out.println(front.data);
+        front=front.next;
+    }
+}
+
+void display(){
+    if(front==null){
+        System.out.println("empty");
+    } else{
+        System.out.println("elements:");
+        Node temp=front;
+        while(temp!=null){
+            System.out.println(temp.data);
+            temp=temp.next;
+        }
+    }
+}
+    
+    public static void main(String[] args){
+    Scanner sc = new Scanner(System.in);
+    QLL s = new QLL();
+    int choice,value;
+    while(true){
+        System.out.println("Menu: 1.enq 2.deq 3.display 4.exit");
+        choice = sc.nextInt();
+        switch(choice){
+            case 1:
+                System.out.println("enter value to push");
+                value=sc.nextInt();
+                s.enqueue(value);
+                break;
+            case 2:
+                s.dequeue();
+                break;
+            case 3:
+                s.display();
+                break;
+            case 4:
+                System.out.println("exiting...");
+                sc.close();
+                return;
+            default:
+                System.out.println("invalid");
+        }
+    }
+}
+}
