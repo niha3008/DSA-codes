@@ -16,7 +16,7 @@ class ArrStack{
     
         void pop(){
             if(top==-1){
-                System.out.println("inderflow");
+                System.out.println("underflow");
             } else{
                 System.out.println("deleted" + stack[top]);
                 top--;
@@ -47,7 +47,7 @@ class ArrStack{
             ArrStack s = new ArrStack();
             int choice, value;
             while(true){
-                System.out.println("Menu: 1. poijhg");
+                System.out.println("Menu: 1.push 2.pop 3.peek 4.display 5.exit");
                 
                 choice=sc.nextInt();
                 
