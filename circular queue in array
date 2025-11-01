@@ -1,0 +1,78 @@
+import java.util.*;
+
+class ArrQ{
+    static final int max=3;
+    int queue[] = new int[max];
+    int f=-1, r=-1;
+    
+    void enqueue(int val){
+        if((r+1) % max == f){
+            System.out.println("Q full");
+        } else {
+            if(f==-1)
+                f=0;
+                r=(r+1)%max;
+                queue[r]=val;
+                System.out.println(val + " inserted");
+        }
+    }
+    
+    void dequeue(){
+        if (f == -1) {
+            System.out.println("Empty");
+            return;
+        }
+        System.out.println(queue[f] + " deleted");
+        if (f == r)
+            f = r = -1;
+        else
+            f = (f + 1) % max;
+    }
+    
+    void display(){
+        if (f == -1) {
+            System.out.println("Empty");
+            return;
+        }
+        System.out.print("elements: ");
+        int i = f;
+        while (true) {
+            System.out.print(queue[i] + " ");
+            if (i == r)
+                break;
+            i = (i + 1) % max;
+        }
+        System.out.println();
+    }
+
+
+public static void main(String[] args){
+    Scanner sc=new Scanner(System.in);
+    ArrQ q = new ArrQ();
+    int choice,val;
+    
+    while(true){
+        System.out.println("Menu: 1.en 2.deq 3.dis 4.exit");
+        
+        choice = sc.nextInt();
+        switch(choice){
+            case 1:
+                System.out.println("enter val");
+                val=sc.nextInt();
+                q.enqueue(val);
+                break;
+            case 2:
+                q.dequeue();
+                break;
+            case 3:
+                q.display();
+                break;
+            case 4:
+                System.out.println("exiting,..");
+                return;
+            default:
+                System.out.println("wrong");
+        }
+    }
+}
+}
