@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+class Node{
+    int data;
+    Node left,right;
+    
+    Node(int value){
+        data=value;
+        left=right=null;
+    }
+}
+
+class Bin{
+    Node root;
+
+
+    Node create(Scanner sc){
+        System.out.print("Enter node value (or -1 for no node): ");
+        int value = sc.nextInt();
+        
+        if(value == -1) {
+            return null;
+        }
+
+        Node n = new Node(value);
+        
+
+        System.out.println("Entering left child of " + value + "...");
+        n.left = create(sc);
+        
+        System.out.println("Entering right child of " + value + "...");
+        n.right = create(sc);
+        
+        return n;
+    }
+    
+    void inorder(Node node){
+       if(node == null)
+       return;
+       inorder(node.left);
+       System.out.print(node.data + " ");
+       inorder(node.right);
+    }
+    
+    void preorder(Node node){
+       if(node == null)
+       return;
+       System.out.print(node.data + " ");
+       preorder(node.left);
+       preorder(node.right);
+    }
+    
+    void postorder(Node node){
+       if(node == null)
+       return;
+       postorder(node.left);
+       postorder(node.right);
+       System.out.print(node.data + " ");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Bin b = new Bin();
+        
+        System.out.println("--- Binary Tree Construction ---");
+        b.root = b.create(sc);
+        
+        System.out.println("\n--- Traversals ---");
+        
+        System.out.print("Inorder Traversal: ");
+        b.inorder(b.root);
+        System.out.println();
+        
+        System.out.print("Preorder Traversal: ");
+        b.preorder(b.root);
+        System.out.println();
+        
+        System.out.print("Postorder Traversal: ");
+        b.postorder(b.root);
+        System.out.println();
+        
+        sc.close();
+    }
+}
