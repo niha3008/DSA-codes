@@ -1,0 +1,93 @@
+import java.util.*;
+
+public class BFS{
+    int n;
+    int[][] adj;
+    int[] queue;
+    int f,r;
+    int[] visited;
+    
+    void createGraph(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter number of vertices:");
+        n=sc.nextInt();
+        adj=new int[n][n];
+        visited= new int[n];
+        queue = new int[n];
+        f=r=-1;
+        
+        System.out.println("enter no. of edges:");
+        int e= sc.nextInt();
+        System.out.println("enter edges:");
+        for(int i=0; i<e; i++){
+            int src = sc.nextInt();
+            int dest = sc.nextInt();
+            adj[src][dest]=1;
+            adj[dest][src]=1;
+        }
+        
+        System.out.println("adjacency matrix:");
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                System.out.print(adj[i][j] + "");
+            }
+            System.out.println();
+        }
+    }
+    
+    void bfs(int start){
+        int v,i;
+        visited[start]=1;
+        addQueue(start);
+        
+        System.out.println("BFS Traversal: ");
+        while(!isEmpty()){
+            v=deleteQueue();
+            System.out.print(v + " ");
+            
+            for(i=0; i<n; i++){
+                if(adj[v][i]==1 && visited[i]==0){
+                    addQueue(i);
+                    visited[i]=1;
+                }
+            }
+        }
+    }
+    
+    void addQueue(int vertex){
+        if(r==n-1){
+            System.out.println("overflow");
+        } else{
+            if(f==-1)
+            f=0;
+            r++;
+            queue[r]=vertex;
+        }
+    }
+    
+    int deleteQueue(){
+        int vertex=-1;
+        if(f==-1 || f>r){
+            System.out.println("underflow");
+        } else{
+            vertex= queue[f];
+            f++;
+        }
+        return vertex;
+    }
+    
+    boolean isEmpty(){
+        return(f==-1 || f>r);
+    }
+    
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        BFS b = new BFS();
+        b.createGraph();
+        
+        System.out.println("enter starting vertex:");
+        int start=sc.nextInt();
+        
+        b.bfs(start);
+    }
+}
