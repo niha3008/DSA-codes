@@ -1,0 +1,38 @@
+import java.util.*;
+
+class PChecker{
+    static Boolean isBalanced(String exp) {
+        Stack<Character>st = new Stack<>();
+        
+        for(int i=0; i<exp.length(); i++){
+            char ch = exp.charAt(i);
+            
+            if(ch=='(' || ch=='{' || ch=='['){
+                st.push(ch);
+            } else if(ch==')' || ch=='}' || ch==']'){
+                if(st.isEmpty())
+                return false;
+                
+                char top = st.pop();
+                if((ch==')' && top!='(') || (ch=='}' && top!='{') || (ch==']' && top!='[')) {
+                    return false;
+                }
+            }
+        }
+        return st.isEmpty();
+    }
+    
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("enter expression:");
+        String exp = sc.nextLine();
+        
+        if(isBalanced(exp)){
+            System.out.println("balanced");
+        } else{
+            System.out.println("not balanced");
+        }
+        sc.close();
+    }
+}
