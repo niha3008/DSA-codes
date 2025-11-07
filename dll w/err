@@ -1,0 +1,255 @@
+import java.util.*;
+
+class Node{
+    int data;
+    Node next;
+    Node prev;
+    
+    Node(int value){
+        data=value;
+        next=null;
+        prev=null;
+    }
+}
+
+class DLL{
+    Node head;
+    
+    void insert_beg(int value){
+        Node n=new Node(value);
+        if(head!=null){
+            n.next=head;
+            head.prev=n;
+            return;
+        }
+        head=n;
+    }
+    
+    void insert_end(int value){
+        Node n=new Node(value);
+        if(head==null){
+            head=n;
+            return;
+        }
+        Node temp=head;
+        while(temp.next!=null)
+        temp=temp.next;
+        temp.next=n;
+        n.prev=temp;
+    }
+    
+    void delete_beg(){
+        if (head == null) {
+            System.out.println("List empty.");
+            return;
+        }
+        head = head.next;
+        if (head != null)
+        head.prev = null;
+    }
+    
+    void delete_end(){
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+        if (head.next == null) {
+            head = null;
+            return;
+        }
+            Node temp = head;
+            while (temp.next != null)
+            temp = temp.next;
+            temp.prev.next = null;
+
+    }
+    
+    void insert_before(int key, int value){
+        if(head==null){
+            System.out.println("liste empty");
+            return;
+        }
+        Node temp=head;
+        while(temp!=null && temp.data!=key){
+            temp=temp.next;
+        }
+        Node n=new Node(value);
+        if(temp.prev==null){
+            n.next=head;
+            head.prev=n;
+            head=n;
+        } else{
+            n.prev=temp.prev;
+            n.next=temp;
+            temp.prev.next=n;
+            temp.prev=n;
+        }
+    }
+    
+    void insert_after(int key, int value){
+        Node temp=head;
+        while(temp!=null && temp.data!=key){
+            temp=temp.next;
+        }
+        Node n=new Node(value);
+        n.next=temp.next;
+        if(temp!=null){
+            temp.next.prev=n;
+        }
+        temp.next=n;
+        n.prev=temp;
+    }
+    
+    void delete_before(int key){
+        if(head==null){
+            System.out.println("list empty, cant delete before");
+            return;
+        }
+        Node temp = head;
+        while(temp!=null && temp.data!=key){
+            temp=temp.next;
+        }
+        if(temp.prev==null || temp==null){
+            System.out.println("node not found");
+            return;
+        }
+        Node del = temp.prev;
+        if(del.prev==null){
+            head=temp;
+            temp.prev=null;
+        }else{
+            del.prev.next=temp;
+            temp.prev=del.prev;
+        }
+        del.next=null;
+        del.prev=null;
+    }
+    
+    void delete_after(int key){
+        if(head==null){
+            System.out.println("list empty, cant delete after");
+            return;
+        }
+        Node temp=head;
+        while(temp!=null && temp.data!=key){
+            temp=temp.next;
+        }
+        if(temp==null){
+            System.out.println("node not found");
+            return;
+        }
+    }
+    
+    void delete_by_key(int key){
+        if (head == null) {
+            System.out.println("List empty");
+            return;
+        }
+        
+        Node current = head;
+
+        if (current.data == key) {
+            head = head.next;
+            return;
+        }
+
+        while (current != null && current.data != key) {
+            current = current.next;
+        }
+
+        if (current == null) {
+            System.out.println("Key not found in the list.");
+            return;
+        }
+        
+        current.prev.next = current.next;
+        current.next.prev = current.prev;
+    }
+    
+    void search(int key){
+        Node temp=head;
+        int flag=0;
+        int pos=1;
+        while(temp!=null){
+            if(temp.data==key){
+                System.out.println("node found at" + pos);
+                flag=1;
+                return;
+            }
+            temp=temp.next;
+            pos++;
+        }
+        if(flag==0)
+        System.out.println("node not found");
+    }
+    
+    void traverse_front(){
+        if(head==null){
+            System.out.println("list empty");
+            return;
+        }
+        Node temp=head;
+        while(temp!=null){
+            System.out.println(temp.data);
+            temp=temp.next;
+        }
+    }
+    
+    void traverse_back(){
+        if(head==null){
+            System.out.println("list empty");
+            return;
+        }
+        Node temp=head;
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        System.out.println("backward traversal:");
+        while(temp!=null){
+            temp=temp.prev;
+            System.out.println(temp.data + " ");
+        }
+    }
+    
+    void countnodes(){
+        int count=0;
+        Node temp=head;
+        while(temp!=null){
+            count++;
+            temp=temp.next;
+        }
+        System.out.println("no.of nodes:" + count);
+    }
+    
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        DLL d = new DLL();
+        int choice,value;
+        choice=sc.nextInt();
+        
+        while(true){
+            System.out.println("MENU:");
+            choice=sc.nextInt();
+            switch(choice){
+                case 1:
+                    System.out.println("enter value to insert at beginning:");
+                    value=sc.nextInt();
+                    d.insert_beg(value);
+                    break;
+                case 2:
+                    System.out.println("enter value to insert at end:");
+                    value=sc.nextInt();
+                    d.insert_end(value);
+                    break;
+                case 3:
+                    System.out.println("insert value to dlele");
+                    value=sc.nextInt();
+                    d.delete_by_key(value);
+                    d.traverse_front();
+                    return;
+                default:
+                    System.out.println("invalid");
+            }
+        }
+    }
+}
