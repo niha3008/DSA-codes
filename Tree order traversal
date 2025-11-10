@@ -6,15 +6,16 @@ class Node{
     
     Node(int value){
         data=value;
-        left=right=null;
+        left=null;
+        right=null;
     }
 }
 
-class BST{
+class Main{
     Node root;
     
     Node create(Scanner sc){
-        System.out.println("enter node value:");
+        System.out.println("enter node value");
         int value= sc.nextInt();
         
         if(value==-1){
@@ -23,10 +24,10 @@ class BST{
         
         Node n = new Node(value);
         
-        System.out.println("enter left child of:" + value);
+        System.out.println("enter left child of node ");
         n.left=create(sc);
         
-        System.out.println("enter right child of:" + value);
+        System.out.println("enter right child of node ");
         n.right=create(sc);
         
         return n;
@@ -55,28 +56,26 @@ class BST{
         postorder(node.right);
         System.out.print(node.data + " ");
     }
-}
-
-class Main{
+    
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
-        BST b=new BST();
+        Main m=new Main();
         
         System.out.println("Binary tree construction:");
-        b.root=b.create(sc);
+        m.root=m.create(sc);
         
         System.out.println("traversals ");
         
         System.out.println("inorder traversal ");
-        b.inorder(b.root);
+        m.inorder(m.root);
         System.out.println();
         
         System.out.println("preorder traversal ");
-        b.preorder(b.root);
+        m.preorder(m.root);
         System.out.println();
         
         System.out.println("postorder traversals ");
-        b.postorder(b.root);
+        m.postorder(m.root);
         System.out.println();
         
         sc.close();
