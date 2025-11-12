@@ -1,0 +1,86 @@
+import java.util.*;
+
+public class Main {
+    int n;
+    int[][] adj;
+    int[] stack;
+    int top;
+    int[] visited;
+
+    void createGraph() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of vertices: ");
+        n = sc.nextInt();
+
+        adj = new int[n][n];
+        visited = new int[n];
+        stack = new int[n];
+        top = -1;
+
+        System.out.print("Enter number of edges: ");
+        int e = sc.nextInt();
+
+        System.out.println("Enter edges (source destination): ");
+        for (int i = 0; i < e; i++) { 
+            int src = sc.nextInt();
+            int dest = sc.nextInt();
+            adj[src][dest] = 1;
+            adj[dest][src] = 1;
+        }
+
+        System.out.println("Adjacency Matrix:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(adj[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    void dfs(int start) {
+        int v, i;
+        visited[start] = 1;
+        push(start);
+
+        System.out.println("DFS Traversal:");
+        while (!isEmpty()) {
+            v = pop();
+            System.out.print(v + " ");
+
+            for (i = 0; i < n; i++) {
+                if (adj[v][i] == 1 && visited[i] == 0) {
+                    push(i);
+                    visited[i] = 1;
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    void push(int value) {
+        if (top == n - 1)
+            System.out.println("Stack Overflow!");
+        else
+            stack[++top] = value;
+    }
+
+    int pop() {
+        if (top == -1)
+            return -1;
+        return stack[top--];
+    }
+
+    boolean isEmpty() {
+        return top == -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Main m = new Main();
+        m.createGraph();
+
+        System.out.print("Enter starting vertex: ");
+        int start = sc.nextInt();
+        m.dfs(start);
+    }
+}
